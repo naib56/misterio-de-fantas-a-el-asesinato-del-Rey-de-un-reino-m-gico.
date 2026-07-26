@@ -35,7 +35,7 @@ btnGenerar.addEventListener('click', async () => {
     zonaJuego.style.display = 'none';
 
     try {
-        // Conexión directa utilizando la clave oficial de AI Studio (que comienza con AQ.)
+        // Conexión directa utilizando la clave oficial de AI Studio (que comienza con AQ.Ab8RN6IzcCJvtfRHe0yT_r_znzLkzoFJyNsCG-SCC9zmJ9OseA)
         const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
         const response = await fetch(url, {
