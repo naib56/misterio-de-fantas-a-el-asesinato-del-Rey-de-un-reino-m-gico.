@@ -27,7 +27,7 @@ Genera un mini-juego de misterio estructurado exactamente en formato JSON con es
 btnGenerar.addEventListener('click', async () => {
     const apiKey = inputApiKey.value.trim();
     if (!apiKey) {
-        alert("Por favor, ingresa tu clave API.");
+        alert("Por favor, ingresa tu clave.");
         return;
     }
 
@@ -35,11 +35,14 @@ btnGenerar.addEventListener('click', async () => {
     zonaJuego.style.display = 'none';
 
     try {
-        let url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+        let url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
         let headers = { 'Content-Type': 'application/json' };
 
+        // Si es un token AQ., se envía por Authorization Bearer sin usar ?key=
         if (apiKey.startsWith('AQ.')) {
             headers['Authorization'] = `Bearer ${apiKey}`;
+        } else {
+            url += `?key=${apiKey}`;
         }
 
         const response = await fetch(url, {
