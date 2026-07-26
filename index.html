@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expediente Oculto: Casos Infinitos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Expediente Oculto</h1>
+        <!-- Panel de Conexión con IA -->
+        <div class="panel-ia">
+            <input type="password" id="api-key" placeholder="Ingresa tu Gemini API Key aquí">
+            <button id="btn-generar-caso">Generar Nuevo Caso con IA</button>
+        </div>
+        <p id="historia-texto" class="historia">Conecta la IA para generar el primer caso...</p>
+    </header>
+
+    <main class="contenedor-principal" id="zona-juego" style="display: none;">
+        <!-- Panel de Acertijos -->
+        <section class="panel-acertijos">
+            <h2>Pistas de la escena:</h2>
+            <ol id="lista-acertijos">
+                <!-- Se llenará con la IA -->
+            </ol>
+            <button id="btn-resolver">Revelar Mensaje Oculto</button>
+            <p id="mensaje-final"></p>
+        </section>
+
+        <!-- Cuadrícula de Sopa de Letras -->
+        <section class="panel-sopa">
+            <div id="cuadricula" class="grid-6x6">
+                <!-- Se llenará con la IA -->
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
