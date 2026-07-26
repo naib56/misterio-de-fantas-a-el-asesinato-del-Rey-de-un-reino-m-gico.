@@ -19,35 +19,25 @@ Genera un mini-juego de misterio estructurado exactamente en formato JSON con es
     "Acertijo poético 2 (respuesta de una palabra)",
     "Acertijo poético 3 (respuesta de una palabra)"
   ],
-  "mapaLetras": ["A","B","C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
-  "solucionSecreta": "FRASEFINAL"
+  "mapaLetras": ["A","B","C", ... (exactamente 36 letras mayúsculas)],
+  "solucionSecreta": "FRASEFINAL (sin espacios)"
 }
 `;
 
 btnGenerar.addEventListener('click', async () => {
     const apiKey = inputApiKey.value.trim();
     if (!apiKey) {
-        alert("Por favor, ingresa tu clave.");
+        alert("Por favor, ingresa tu API Key de Gemini.");
         return;
     }
 
-    textoHistoria.innerText = "Conectando con los servidores de Gemini...";
+    textoHistoria.innerText = "Los engranajes del destino están girando. Gemini está escribiendo el caso...";
     zonaJuego.style.display = 'none';
 
     try {
-        let url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
-        let headers = { 'Content-Type': 'application/json' };
-
-        // Si es un token AQ., se envía por Authorization Bearer sin usar ?key=
-        if (apiKey.startsWith('AQ.')) {
-            headers['Authorization'] = `Bearer ${apiKey}`;
-        } else {
-            url += `?key=${apiKey}`;
-        }
-
-        const response = await fetch(url, {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
             method: 'POST',
-            headers: headers,
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 contents: [{ parts: [{ text: promptExperto }] }],
                 generationConfig: {
@@ -56,15 +46,10 @@ btnGenerar.addEventListener('click', async () => {
             })
         });
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(`Error HTTP ${response.status}: ${errorData.error?.message || response.statusText}`);
-        }
-
         const data = await response.json();
         
         if (!data.candidates || !data.candidates[0].content) {
-            throw new Error("La IA no devolvió contenido válido.");
+            throw new Error("Respuesta inválida de la API");
         }
 
         let textoCrudo = data.candidates[0].content.parts[0].text;
@@ -74,7 +59,7 @@ btnGenerar.addEventListener('click', async () => {
 
     } catch (error) {
         console.error(error);
-        textoHistoria.innerText = "DETALLE DEL ERROR: " + error.message;
+        textoHistoria.innerText = "Hubo un error en la magia. Verifica que tu API Key sea correcta.";
     }
 });
 
