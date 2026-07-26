@@ -35,19 +35,12 @@ btnGenerar.addEventListener('click', async () => {
     zonaJuego.style.display = 'none';
 
     try {
-        let url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
-        let headers = { 'Content-Type': 'application/json' };
-
-        // Configuración adaptada para tokens AQ. o claves tradicionales AIzaSy
-        if (apiKey.startsWith('AQ.')) {
-            headers['Authorization'] = `Bearer ${apiKey}`;
-        } else {
-            url += `?key=${apiKey}`;
-        }
+        // Conexión directa utilizando la clave oficial de AI Studio (que comienza con AQ.)
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
         const response = await fetch(url, {
             method: 'POST',
-            headers: headers,
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 contents: [{ parts: [{ text: promptExperto }] }],
                 generationConfig: {
